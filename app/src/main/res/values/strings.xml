@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ProjetoMySQLWebServiceApp</string>
+    <string name="gerenciar_de_produtos">Gerenciar de Produtos</string>
+    <string name="inserir_o_c_digo">Inserir o código</string>
+    <string name="buscar">Buscar</string>
+    <string name="inserir_o_nome_do_produto">Inserir o nome do produto</string>
+    <string name="inserir_o_pre_o">Inserir o preço</string>
+    <string name="inserir_o_fabricante">Inserir o fabricante</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="alterar">Alterar</string>
+    <string name="excluir">Excluir</string>
+</resources>
