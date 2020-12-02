@@ -59,6 +59,20 @@ public class MainActivity extends AppCompatActivity {
                 buscarProdutos("http://192.168.100.16/webservice/buscar_produtos.php?codProd=" + txtCodProd.getText().toString() + "");
             }
         });
+
+        btnAlterar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cadastrarProduto("http://192.168.100.13/webservice/alterar_produtos.php");
+            }
+        });
+
+        btnExcluir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     private void cadastrarProduto(String URL) {
