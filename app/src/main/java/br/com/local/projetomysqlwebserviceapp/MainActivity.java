@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void cadastrarProduto(String URL) {
+    private void cadastrarProduto(String URL) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -93,21 +93,17 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    public void buscarProdutos(String URL) {
+    private void buscarProdutos(String URL) {
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-
-                Toast.makeText(getApplicationContext(),
-                        "passei",
-                        Toast.LENGTH_SHORT).show();
                 JSONObject jsonObject = null;
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         jsonObject = response.getJSONObject(i);
-                        txtNomeProd.setText(jsonObject.getString("codProd"));
-                        txtPrecoProd.setText(jsonObject.getString("nomeProd"));
+                        txtNomeProd.setText(jsonObject.getString("nomeProd"));
+                        txtPrecoProd.setText(jsonObject.getString("precoProd"));
                         txtFabricante.setText(jsonObject.getString("fabricanteProd"));
 
                     } catch (JSONException e) {
@@ -121,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(),
-                        "Erro ao conectar ao banco de dados",
+                        "Produto não encontrado.",
                         Toast.LENGTH_SHORT).show();
             }
         });
