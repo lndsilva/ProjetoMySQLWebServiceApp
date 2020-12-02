@@ -56,14 +56,14 @@ public class MainActivity extends AppCompatActivity {
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buscarProdutos("http://192.168.100.16/webservice/buscar_produtos.php?codProd=" + txtCodProd.getText().toString() + "");
+                buscarProdutos("http://192.168.100.13/webservice/buscar_produtos.php?codProd=" + txtCodProd.getText().toString() + "");
             }
         });
 
         btnAlterar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cadastrarProduto("http://192.168.100.13/webservice/alterar_produtos.php");
+                alterarProdutos("http://192.168.100.13/webservice/alterar_produtos.php");
             }
         });
 
@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                excluirProdutos("http://192.168.100.13/webservice/excluir_produtos.php");
+                limparCampos();
             }
         });
     }
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getApplicationContext(),
-                        "Cadastrado com sucesso!!!",
+                        "Produto cadastrado com sucesso!!!",
                         Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
@@ -131,11 +133,80 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(),
-                        "Produto não encontrado.",
+                        "Produto não encontrado!!!",
                         Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
+    }
+
+    private void alterarProdutos(String URL) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getApplicationContext(),
+                        "Produto alterado com sucesso!!!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(),
+                        error.toString(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parametros = new HashMap<String, String>();
+                parametros.put("codProd", txtCodProd.getText().toString());
+                parametros.put("nomeProd", txtNomeProd.getText().toString());
+                parametros.put("precoProd", txtPrecoProd.getText().toString());
+                parametros.put("fabricanteProd", txtFabricante.getText().toString());
+
+                return parametros;
+            }
+        };
+
+        requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void excluirProdutos(String URL) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getApplicationContext(),
+                        "Produto excluído com sucesso!!!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(),
+                        error.toString(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parametros = new HashMap<String, String>();
+                parametros.put("codProd", txtCodProd.getText().toString());
+
+                return parametros;
+            }
+        };
+
+        requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void limparCampos() {
+        txtCodProd.setText("");
+        txtNomeProd.setText("");
+        txtPrecoProd.setText("");
+        txtFabricante.setText("");
+        txtCodProd.requestFocus();
     }
 }
